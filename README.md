@@ -6,6 +6,10 @@ Persian-first Android app for managing tennis classes, students, sessions, and p
 
 Tennis Manager یک اپ آفلاین برای مدیریت کلاس‌های تنیس است. تمرکز آن روی ثبت شاگردها، مدیریت جلسات، حضور و غیاب، پرداخت‌ها، گزارش‌ها و پشتیبان‌گیری است.
 
+## توضیح کوتاه
+
+یک برنامه اندرویدی برای مدیریت کلاس تنیس، شاگردها، جلسه‌ها و پرداخت‌ها با رابط فارسی و آفلاین.
+
 ## Features
 
 - Persian RTL interface
