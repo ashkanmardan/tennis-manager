@@ -53,6 +53,12 @@ flutter pub get
 flutter run
 ```
 
+## فایل نصب
+
+نسخه APK در این مسیر قرار دارد:
+
+`releases/TennisApp-release.apk`
+
 ## قوانین کسب‌وکار
 
 - جلسات جبرانی رایگانن و بدهی مربی رو تسویه می‌کنن

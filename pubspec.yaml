@@ -1,41 +1,32 @@
 name: tennis_manager
-description: مدیریت کلاس تنیس - Persian-first offline app
+
+description: دستیار شخصی بازیکن تنیس - Persian-first offline app
+
 publish_to: 'none'
+
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+
   flutter_localizations:
     sdk: flutter
 
-  # Database
   sqflite: ^2.3.0
   path: ^1.8.3
-
-  # State Management
   provider: ^6.1.1
-
-  # Persian Calendar
-  shamsi_date: ^1.1.2
-
-  # Image Picker (for payment receipts)
-  image_picker: ^1.0.7
-
-  # File/Backup
+  shamsi_date: ^1.1.1
   path_provider: ^2.1.2
-  share_plus: ^7.2.1
-  file_picker: ^8.0.3
-
-  # Permissions
-  permission_handler: ^11.3.0
-
-  # UI
-  flutter_svg: ^2.0.10+1
   cupertino_icons: ^1.0.6
+  url_launcher: ^6.2.5
+  image_picker: ^1.0.7
+  share_plus: ^7.2.2
+  # file_picker removed — using getExternalStorageDirectory scan instead
+  # flutter_local_notifications: ^17.0.0  # TODO: فعال‌سازی با VPN
 
 dev_dependencies:
   flutter_test:
@@ -44,8 +35,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
   assets:
     - assets/images/
+
   fonts:
     - family: Vazirmatn
       fonts:

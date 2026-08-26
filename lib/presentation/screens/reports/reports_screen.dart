@@ -1,342 +1,235 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/jalali_helper.dart';
-import '../../../data/models/student.dart';
 import '../../../data/repositories/app_repository.dart';
+import '../../../data/models/session.dart';
 
-class ReportsScreen extends StatefulWidget {
+class ReportsScreen extends StatelessWidget {
   const ReportsScreen({super.key});
-
-  @override
-  State<ReportsScreen> createState() => _ReportsScreenState();
-}
-
-class _ReportsScreenState extends State<ReportsScreen> {
-  late int _year;
-  late int _month;
-  Map<String, dynamic>? _report;
-  bool _loading = false;
-
-  @override
-  void initState() {
-    super.initState();
-    final j = JalaliHelper.today;
-    _year = j.year;
-    _month = j.month;
-    _loadReport();
-  }
-
-  Future<void> _loadReport() async {
-    setState(() => _loading = true);
-    final repo = context.read<AppRepository>();
-    final data = await repo.getMonthlyReport(_year, _month);
-    if (mounted) setState(() { _report = data; _loading = false; });
-  }
-
-  void _changeMonth(bool next) {
-    setState(() {
-      if (next) {
-        if (_month == 12) { _month = 1; _year++; } else _month++;
-      } else {
-        if (_month == 1) { _month = 12; _year--; } else _month--;
-      }
-    });
-    _loadReport();
-  }
 
   @override
   Widget build(BuildContext context) {
     final repo = context.watch<AppRepository>();
-
     return Scaffold(
-      appBar: AppBar(title: const Text('گزارش‌ها')),
-      body: Column(
-        children: [
-          // Month selector
-          Container(
-            color: const Color(0xFF2E7D32),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.chevron_right, color: Colors.white),
-                  onPressed: () => _changeMonth(false),
-                ),
-                Expanded(
-                  child: Text(
-                    '${JalaliHelper.monthName(_month)} ${JalaliHelper.toPersianDigits(_year.toString())}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.chevron_left, color: Colors.white),
-                  onPressed: () => _changeMonth(true),
-                ),
-              ],
-            ),
-          ),
-
-          Expanded(
-            child: _loading
-                ? const Center(child: CircularProgressIndicator())
-                : _report == null
-                    ? const Center(child: Text('خطا در بارگذاری گزارش'))
-                    : ListView(
-                        padding: const EdgeInsets.all(16),
-                        children: [
-                          // Sessions section
-                          _SectionHeader(title: 'جلسات', icon: Icons.sports_tennis),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: _ReportCard(
-                                  label: 'کل جلسات',
-                                  value: JalaliHelper.toPersianDigits(
-                                      _report!['session_count'].toString()),
-                                  color: Colors.blue,
-                                  icon: Icons.calendar_month,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: _ReportCard(
-                                  label: 'عادی',
-                                  value: JalaliHelper.toPersianDigits(
-                                      _report!['regular_sessions'].toString()),
-                                  color: Colors.green,
-                                  icon: Icons.check_circle,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: _ReportCard(
-                                  label: 'جبرانی',
-                                  value: JalaliHelper.toPersianDigits(
-                                      _report!['makeup_sessions'].toString()),
-                                  color: Colors.orange,
-                                  icon: Icons.repeat,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: _ReportCard(
-                                  label: 'لغو‌شده',
-                                  value: JalaliHelper.toPersianDigits(
-                                      _report!['cancelled_sessions'].toString()),
-                                  color: Colors.red,
-                                  icon: Icons.cancel,
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 20),
-
-                          // Financial section
-                          _SectionHeader(title: 'مالی', icon: Icons.monetization_on),
-                          const SizedBox(height: 8),
-                          _FinancialRow(
-                            label: 'کل درآمد دریافتی',
-                            amount: _report!['total_income'],
-                            color: Colors.green,
-                          ),
-                          _FinancialRow(
-                            label: 'هزینه توپ',
-                            amount: _report!['total_ball_costs'],
-                            color: Colors.orange,
-                          ),
-                          _FinancialRow(
-                            label: 'سود خالص',
-                            amount: (_report!['total_income'] - _report!['total_ball_costs'])
-                                .clamp(0, double.maxFinite)
-                                .toInt(),
-                            color: Colors.blue,
-                          ),
-
-                          const SizedBox(height: 20),
-
-                          // Students section
-                          _SectionHeader(title: 'شاگردان', icon: Icons.people),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: _ReportCard(
-                                  label: 'شاگرد فعال',
-                                  value: JalaliHelper.toPersianDigits(
-                                      repo.activeStudents.length.toString()),
-                                  color: Colors.blue,
-                                  icon: Icons.people,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: _ReportCard(
-                                  label: 'تعداد پرداخت',
-                                  value: JalaliHelper.toPersianDigits(
-                                      _report!['payment_count'].toString()),
-                                  color: Colors.green,
-                                  icon: Icons.receipt,
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 20),
-
-                          // Student debt list
-                          _SectionHeader(title: 'وضعیت بدهی شاگردان', icon: Icons.warning_amber),
-                          const SizedBox(height: 8),
-                          ...repo.activeStudents.map((student) => _StudentDebtTile(
-                                student: student,
-                              )),
-                        ],
-                      ),
-          ),
-        ],
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryDark,
+        elevation: 0,
+        title: const Text('آمار و گزارش', style: TextStyle(color: Colors.white)),
+      ),
+      body: FutureBuilder<_ReportData>(
+        future: _loadData(repo),
+        builder: (ctx, snap) {
+          if (!snap.hasData) {
+            return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+          }
+          final d = snap.data!;
+          return ListView(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
+            children: [
+              _SummaryCard(data: d),
+              const SizedBox(height: 16),
+              _MonthlyGrid(data: d),
+              const SizedBox(height: 16),
+              _StatusBreakdown(data: d),
+            ],
+          );
+        },
       ),
     );
   }
-}
 
-class _SectionHeader extends StatelessWidget {
-  final String title;
-  final IconData icon;
-
-  const _SectionHeader({required this.title, required this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: const Color(0xFF2E7D32), size: 20),
-        const SizedBox(width: 8),
-        Text(title,
-            style: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF2E7D32))),
-        const Expanded(child: Divider(indent: 12)),
-      ],
-    );
+  Future<_ReportData> _loadData(AppRepository repo) async {
+    final all = await repo.sessionRepo.getAll();
+    return _ReportData(sessions: all, pkg: repo.activePackage);
   }
 }
 
-class _ReportCard extends StatelessWidget {
-  final String label;
-  final String value;
-  final Color color;
-  final IconData icon;
+class _ReportData {
+  final List<Session> sessions;
+  final dynamic pkg;
 
-  const _ReportCard({
-    required this.label,
-    required this.value,
-    required this.color,
-    required this.icon,
-  });
+  _ReportData({required this.sessions, this.pkg});
+
+  int get total => sessions.length;
+  int get completed => sessions.where((s) => s.status == SessionStatus.completed).length;
+  int get cancelledByCoach => sessions.where((s) => s.status == SessionStatus.cancelledByCoach).length;
+  int get cancelledByPlayer => sessions.where((s) => s.status == SessionStatus.cancelledByPlayer).length;
+  int get weatherCount => sessions.where((s) => s.status == SessionStatus.weather).length;
+  int get makeup => sessions.where((s) => s.isMakeup).length;
+  double get attendanceRate => total == 0 ? 0 : completed / total;
+
+  // ماه جاری
+  Map<String, int> get currentMonthCounts {
+    final j = JalaliHelper.today;
+    final thisMonth = sessions.where((s) =>
+        s.jalaliYear == j.year && s.jalaliMonth == j.month).toList();
+    return {
+      'completed': thisMonth.where((s) => s.status == SessionStatus.completed).length,
+      'cancelled': thisMonth.where((s) =>
+          s.status != SessionStatus.upcoming && s.status != SessionStatus.completed).length,
+      'upcoming': thisMonth.where((s) => s.status == SessionStatus.upcoming).length,
+    };
+  }
+}
+
+class _SummaryCard extends StatelessWidget {
+  final _ReportData data;
+  const _SummaryCard({required this.data});
 
   @override
   Widget build(BuildContext context) {
+    final pct = (data.attendanceRate * 100).round();
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.08),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.2)),
+        gradient: const LinearGradient(
+          colors: [AppColors.primaryDark, AppColors.primary],
+          begin: Alignment.topRight, end: Alignment.bottomLeft,
+        ),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [BoxShadow(color: AppColors.primary.withAlpha(60),
+            blurRadius: 16, offset: const Offset(0, 5))],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: color, size: 20),
-          const SizedBox(height: 8),
-          Text(value,
-              style: TextStyle(
-                  fontSize: 26, fontWeight: FontWeight.bold, color: color)),
-          Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-        ],
-      ),
+      child: Column(children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          _StatBubble(
+              value: JalaliHelper.toPersianDigits(data.completed.toString()),
+              label: 'برگزار شده', color: AppColors.neonGreen),
+          _StatBubble(
+              value: '${JalaliHelper.toPersianDigits(pct.toString())}٪',
+              label: 'حضور', color: Colors.white),
+          _StatBubble(
+              value: JalaliHelper.toPersianDigits(data.total.toString()),
+              label: 'کل جلسات', color: Colors.white70),
+        ]),
+        const SizedBox(height: 16),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: LinearProgressIndicator(
+            value: data.attendanceRate,
+            backgroundColor: Colors.white24,
+            color: AppColors.neonGreen,
+            minHeight: 8,
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text('نرخ حضور شما: ${JalaliHelper.toPersianDigits(pct.toString())}٪',
+            style: const TextStyle(color: Colors.white70, fontSize: 12)),
+      ]),
     );
   }
 }
 
-class _FinancialRow extends StatelessWidget {
-  final String label;
-  final int amount;
+class _StatBubble extends StatelessWidget {
+  final String value, label;
   final Color color;
+  const _StatBubble({required this.value, required this.label, required this.color});
+  @override
+  Widget build(BuildContext context) => Column(children: [
+    Text(value, style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800, color: color)),
+    Text(label, style: const TextStyle(fontSize: 11, color: Colors.white60)),
+  ]);
+}
 
-  const _FinancialRow({required this.label, required this.amount, required this.color});
-
+class _MonthlyGrid extends StatelessWidget {
+  final _ReportData data;
+  const _MonthlyGrid({required this.data});
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(label, style: const TextStyle(fontSize: 14)),
-          Text(
-            '${JalaliHelper.formatAmount(amount)} تومان',
-            style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 15),
-          ),
-        ],
-      ),
-    );
+    final j = JalaliHelper.today;
+    final counts = data.currentMonthCounts;
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text('ماه جاری — ${JalaliHelper.monthName(j.month)}',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15,
+              color: AppColors.primaryDark)),
+      const SizedBox(height: 10),
+      Row(children: [
+        Expanded(child: _MiniStat('برگزار شده', counts['completed']!, AppColors.accent, '✅')),
+        const SizedBox(width: 8),
+        Expanded(child: _MiniStat('لغو شده', counts['cancelled']!, Colors.red.shade400, '❌')),
+        const SizedBox(width: 8),
+        Expanded(child: _MiniStat('پیش‌رو', counts['upcoming']!, AppColors.primary, '📅')),
+      ]),
+    ]);
   }
 }
 
-class _StudentDebtTile extends StatefulWidget {
-  final Student student;
-
-  const _StudentDebtTile({required this.student});
-
+class _MiniStat extends StatelessWidget {
+  final String label;
+  final int count;
+  final Color color;
+  final String emoji;
+  const _MiniStat(this.label, this.count, this.color, this.emoji);
   @override
-  State<_StudentDebtTile> createState() => _StudentDebtTileState();
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: color.withAlpha(15),
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(color: color.withAlpha(50)),
+    ),
+    child: Column(children: [
+      Text(emoji, style: const TextStyle(fontSize: 22)),
+      const SizedBox(height: 6),
+      Text(JalaliHelper.toPersianDigits(count.toString()),
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color)),
+      Text(label, style: TextStyle(fontSize: 10, color: color), textAlign: TextAlign.center),
+    ]),
+  );
 }
 
-class _StudentDebtTileState extends State<_StudentDebtTile> {
-  int _debt = 0;
-
+class _StatusBreakdown extends StatelessWidget {
+  final _ReportData data;
+  const _StatusBreakdown({required this.data});
   @override
-  void initState() {
-    super.initState();
-    _loadDebt();
-  }
+  Widget build(BuildContext context) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    const Text('تفکیک وضعیت‌ها', style: TextStyle(fontWeight: FontWeight.bold,
+        fontSize: 15, color: AppColors.primaryDark)),
+    const SizedBox(height: 10),
+    _StatusRow('برگزار شده', data.completed, AppColors.accent, data.total),
+    _StatusRow('لغو توسط مربی', data.cancelledByCoach, AppColors.makeup, data.total),
+    _StatusRow('لغو توسط من', data.cancelledByPlayer, AppColors.debt, data.total),
+    _StatusRow('آب‌وهوا', data.weatherCount, Colors.indigo, data.total),
+    _StatusRow('جلسات جبرانی', data.makeup, AppColors.makeup, data.total),
+  ]);
+}
 
-  Future<void> _loadDebt() async {
-    final debt = await context.read<AppRepository>().getStudentDebt(widget.student);
-    if (mounted) setState(() => _debt = debt);
-  }
-
+class _StatusRow extends StatelessWidget {
+  final String label;
+  final int count;
+  final Color color;
+  final int total;
+  const _StatusRow(this.label, this.count, this.color, this.total);
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 3),
-      child: ListTile(
-        dense: true,
-        leading: CircleAvatar(
-          radius: 18,
-          backgroundColor: _debt > 0 ? Colors.red.shade100 : Colors.green.shade100,
-          child: Icon(
-            _debt > 0 ? Icons.warning_amber : Icons.check,
-            size: 16,
-            color: _debt > 0 ? Colors.red : Colors.green,
-          ),
-        ),
-        title: Text(widget.student.name, style: const TextStyle(fontSize: 14)),
-        trailing: Text(
-          _debt > 0 ? '${JalaliHelper.formatAmount(_debt)} ت بدهکار' : 'تسویه',
-          style: TextStyle(
-            color: _debt > 0 ? Colors.red : Colors.green,
-            fontWeight: FontWeight.bold,
-            fontSize: 13,
-          ),
-        ),
+    final frac = total == 0 ? 0.0 : count / total;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [BoxShadow(color: Colors.black.withAlpha(6), blurRadius: 4, offset: const Offset(0, 2))],
       ),
+      child: Column(children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(label, style: const TextStyle(fontSize: 13)),
+          Text(JalaliHelper.toPersianDigits(count.toString()),
+              style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 14)),
+        ]),
+        const SizedBox(height: 6),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: LinearProgressIndicator(
+            value: frac,
+            backgroundColor: color.withAlpha(20),
+            color: color,
+            minHeight: 6,
+          ),
+        ),
+      ]),
     );
   }
 }

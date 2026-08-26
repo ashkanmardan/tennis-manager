@@ -1,0 +1,18 @@
+// Gradle init script: add mirrors, skip Flutter SDK included builds
+allprojects {
+    // Skip projects inside included builds (e.g., flutter_tools/gradle which uses FAIL_ON_PROJECT_REPOS)
+    if (project.gradle.parent != null) return
+
+    repositories {
+        maven { url 'https://storage.flutter-io.cn/download.flutter.io' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+    }
+    buildscript {
+        repositories {
+            maven { url 'https://maven.aliyun.com/repository/google' }
+            maven { url 'https://maven.aliyun.com/repository/central' }
+            maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        }
+    }
+}
