@@ -1,73 +1,63 @@
-# 🎾 اپ مدیریت کلاس تنیس
+# Tennis Manager
 
-اپلیکیشن اندروید برای مدیریت کلاس‌های تنیس — فارسی، آفلاین‌اول
+Persian-first Android app for managing tennis classes, students, sessions, and payments.
 
-## ویژگی‌ها
+## معرفی
 
-- رابط کاربری کاملاً فارسی و RTL
-- تقویم جلالی
-- کاملاً آفلاین (بدون نیاز به اینترنت)
-- مدیریت شاگردان (با شهریه ماهانه یا جلسه‌ای)
-- مدیریت جلسات (عادی، جبرانی، لغو‌شده)
-- ثبت حضور و غیاب
-- پیگیری پرداخت‌ها (با رسید اختیاری)
-- هزینه توپ
-- گزارش‌های ماهانه
-- بکاپ و ریستور
+Tennis Manager یک اپ آفلاین برای مدیریت کلاس‌های تنیس است. تمرکز آن روی ثبت شاگردها، مدیریت جلسات، حضور و غیاب، پرداخت‌ها، گزارش‌ها و پشتیبان‌گیری است.
 
-## ساختار پروژه
+## Features
 
-```
+- Persian RTL interface
+- Jalali calendar support
+- Offline-first workflow
+- Student management
+- Session scheduling and tracking
+- Attendance records
+- Payment and finance tracking
+- Monthly reports
+- Backup and restore
+
+## Project Structure
+
+```text
 lib/
-├── core/
-│   ├── constants/   - ثابت‌های اپ
-│   ├── theme/       - تم و استایل
-│   └── utils/       - ابزارهای کمکی (تقویم جلالی، فرمت‌بندی)
-├── data/
-│   ├── database/    - SQLite helper
-│   ├── models/      - مدل‌های داده
-│   └── repositories/ - منطق کسب‌وکار
-└── presentation/
-    ├── screens/     - صفحات اپ
-    └── widgets/     - کامپوننت‌های مشترک
+  core/           shared constants, theme, and helpers
+  data/           models, repositories, and database
+  presentation/   screens and reusable widgets
 ```
 
-## راه‌اندازی
+## Requirements
 
-### پیش‌نیازها
+1. Flutter SDK 3.x or newer
+2. Android Studio or VS Code
 
-1. Flutter SDK (>=3.0.0)
-2. Android Studio یا VS Code
-
-### نصب فونت وزیرمتن
-
-فونت Vazirmatn را از [اینجا](https://github.com/rastikerdar/vazirmatn/releases) دانلود کنید و سه فایل زیر را در `assets/fonts/` قرار دهید:
-- `Vazirmatn-Regular.ttf`
-- `Vazirmatn-Medium.ttf`
-- `Vazirmatn-Bold.ttf`
-
-### اجرا
+## Run
 
 ```bash
 flutter pub get
 flutter run
 ```
 
-## فایل نصب
+## APK
 
-نسخه APK در این مسیر قرار دارد:
+The current APK is included in this repository:
 
 `releases/TennisApp-release.apk`
 
-## قوانین کسب‌وکار
+## Business Rules
 
-- جلسات جبرانی رایگانن و بدهی مربی رو تسویه می‌کنن
-- غیبت در گروه شهریه رو برنمی‌داره
-- پرداخت می‌تونه چندتیکه باشه
-- هزینه توپ جداگانه ثبت می‌شه
-- تاریخچه مربیان حفظ می‌شه
+- Makeup sessions are free and reduce coach debt
+- Group-fee absence does not remove the fee
+- Payments can be split into multiple entries
+- Ball costs are tracked separately
+- Coach history is preserved
 
-## صاحب نرم‌افزار
+## Notes
 
-اشکان مردانپور | ۰۹۱۸۸۵۹۳۸۹۷
-"# tennis-manager" 
+- The repository currently includes design and architecture notes used during development.
+- The APK is large enough that future releases may be better handled through GitHub Releases rather than normal repository history.
+
+## Owner
+
+Ashkan Mardanpour
