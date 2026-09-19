@@ -21,7 +21,7 @@ No obvious tracked credential, private key, keystore, `.env`, or historical sens
 
 ## CI Status
 
-The new `.github/workflows/flutter-ci.yml` parses locally and is configured for pull requests and pushes to `main`: dependency resolution, test formatting, analysis, tests, and Android debug build. **GitHub Actions has not run this new workflow yet.** Its badge must be read from the real run after the branch is published and merged.
+The new `.github/workflows/flutter-ci.yml` runs on pull requests and pushes to `main`: dependency resolution, test formatting, analysis, tests, and Android debug build. The [first GitHub Actions run](https://github.com/ashkanmardan/tennis-manager/actions/runs/35475491390) on draft PR #1 **passed** on 2026-09-20 in 5m 46s, including the debug APK build. Build logs warn that the selected Gradle, AGP, and Kotlin versions will need future upgrades. Future commits require their own CI result; a badge on `main` reflects the merged branch only.
 
 ## Test Status
 
@@ -41,13 +41,13 @@ No verified GitHub Release exists. The old tracked APK is version 1.0.0 and its 
 
 ## GitHub Community Health
 
-README, license, conduct, contributing, security policy, issue forms, and PR template are present on this branch. Community health on GitHub and CI results cannot be confirmed until the branch is published and the workflow runs.
+README, license, conduct, contributing, security policy, issue forms, and PR template are present on the published draft PR branch. The first PR CI run passed. GitHub's community health display for the default branch will reflect these files after merge.
 
 ## Remaining Manual Tasks
 
 1. Confirm ownership/provenance of source and launcher icons, then review the old APK's signer against the intended release key.
 2. Enable/test GitHub private vulnerability reporting and choose a private conduct-reporting contact.
-3. Run CI on a PR, install the resulting app on Android, test upgrade and backup/restore with synthetic data, and capture redacted real screenshots.
+3. Install the app on Android, test upgrade and backup/restore with synthetic data, and capture redacted real screenshots. Recheck CI after subsequent commits and before merge.
 4. Configure a private release key outside Git, verify a signed release APK, create a tag and GitHub Release, and set repository description/topics through GitHub settings if desired.
 5. Review the divergent `lib/lib/` tree, obsolete local scripts, transitive licenses, and future Gradle/AGP/Kotlin compatibility in focused follow-up changes.
 
@@ -61,8 +61,8 @@ Wait on established-project JetBrains support and BrowserStack until a verified 
 
 ## Risks / Concerns
 
-The historical APK is large and has unresolved provenance; backups contain sensitive data; `lib/lib/` diverges from active source; Android build tooling currently works but Flutter warns that the selected Gradle/AGP/Kotlin versions will need future upgrades. CI and device behavior are not yet proven.
+The historical APK is large and has unresolved provenance; backups contain sensitive data; `lib/lib/` diverges from active source; Android build tooling currently works but Flutter warns that the selected Gradle/AGP/Kotlin versions will need future upgrades. The first PR CI run passed; device behavior is still unverified.
 
 ## Recommended Next Development Steps
 
-Publish the branch, review the first CI run, validate installation/backup on a device, resolve signing and asset provenance, then create the first verified GitHub Release. Add focused migration and backup tests before expanding features.
+Review the draft PR, validate installation/backup on a device, resolve signing and asset provenance, then create the first verified GitHub Release. Add focused migration and backup tests before expanding features.

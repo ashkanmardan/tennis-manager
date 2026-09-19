@@ -36,7 +36,7 @@ Audited 2026-09-20 from `main` at `a721d01` (four commits), before the readiness
 ### Low
 
 - Existing Dart formatting differs from `dart format`; a repository-wide format pass would obscure functional history. Format changed Dart files and plan a dedicated cleanup.
-- `SETUP_GITHUB.md`, `build_apk.bat`, icon scripts, and sync scripts contain machine-specific or obsolete paths. They are retained as historical material for safe owner review; use the new installation/release docs instead.
+- `SETUP_GITHUB.md`, icon scripts, and sync scripts contain machine-specific or obsolete paths and remain for owner review. The Windows `build_apk.bat` helper was corrected on this branch to build a debug APK; use the new installation/release docs for current instructions.
 - `pubspec.lock` was ignored; this branch tracks it for reproducible app dependency resolution.
 
 ### Optional
