@@ -13,12 +13,19 @@ build/
 android/local.properties
 android/.gradle/
 android/captures/
-android/gradlew
-android/gradlew.bat
-android/gradle/
 android/key.properties
 *.jks
 *.keystore
+*.p12
+*.pem
+**/key.properties
+**/local.properties
+**/.gradle/
+**/captures/
+**/build/
+.env
+.env.*
+!.env.example
 
 # IDE
 .idea/
@@ -33,5 +40,4 @@ Thumbs.db
 
 # Misc
 *.log
-pubspec.lock
 tennis-manager/
