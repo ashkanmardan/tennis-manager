@@ -1,0 +1,50 @@
+name: Bug report
+description: Report a reproducible problem without private student or payment data.
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug description
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      placeholder: "1. Open...\n2. Tap...\n3. Observe..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: input
+    id: android
+    attributes:
+      label: Android version
+  - type: input
+    id: device
+    attributes:
+      label: Device model
+  - type: input
+    id: app
+    attributes:
+      label: App version or commit
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots or redacted logs
+      description: Remove names, phone numbers, payments, and other private data.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
