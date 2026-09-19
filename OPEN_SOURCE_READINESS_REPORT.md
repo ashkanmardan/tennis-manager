@@ -17,7 +17,7 @@ MIT is in the root `LICENSE` for original code/docs. Vazirmatn is SIL OFL 1.1 (`
 
 ## Security Status
 
-No obvious tracked credential, private key, keystore, `.env`, or historical sensitive filename was found. The public Gradle file contains signing property names, not values. JSON backups can include personal and payment information and may be sent through Android sharing. A private vulnerability-reporting channel still needs to be enabled and tested by the owner. The old APK has a valid v2 APK signature, but the signer identity has not been matched to the owner.
+No obvious tracked credential, private key, keystore, `.env`, or historical sensitive filename was found. The public Gradle file contains signing property names, not values. JSON backups can include personal and payment information and may be sent through Android sharing. GitHub private vulnerability reporting, dependency graph, Dependabot alerts, malware alerts, security updates, and grouped security updates were enabled on 2026-09-20. The private report path still needs an external reporter test. The old APK has a valid v2 APK signature, but the signer identity has not been matched to the owner.
 
 ## CI Status
 
@@ -41,14 +41,14 @@ No verified GitHub Release exists. The old tracked APK is version 1.0.0 and its 
 
 ## GitHub Community Health
 
-README, license, conduct, contributing, security policy, issue forms, and PR template are present on the published draft PR branch. The first PR CI run passed. GitHub's community health display for the default branch will reflect these files after merge.
+README, license, conduct, contributing, security policy, issue forms, and PR template are present on the published draft PR branch. The first PR CI run passed. Repository description and nine topics were updated to reflect implemented features. GitHub's community health display for the default branch will reflect the new files after merge.
 
 ## Remaining Manual Tasks
 
 1. Confirm ownership/provenance of source and launcher icons, then review the old APK's signer against the intended release key.
-2. Enable/test GitHub private vulnerability reporting and choose a private conduct-reporting contact.
+2. Test GitHub private vulnerability reporting from an external reporter account and choose a private conduct-reporting contact.
 3. Install the app on Android, test upgrade and backup/restore with synthetic data, and capture redacted real screenshots. Recheck CI after subsequent commits and before merge.
-4. Configure a private release key outside Git, verify a signed release APK, create a tag and GitHub Release, and set repository description/topics through GitHub settings if desired.
+4. Configure a private release key outside Git, verify a signed release APK, then create a tag and GitHub Release.
 5. Review the divergent `lib/lib/` tree, obsolete local scripts, transitive licenses, and future Gradle/AGP/Kotlin compatibility in focused follow-up changes.
 
 ## Recommended Programs to Apply For Now

@@ -6,6 +6,6 @@ Security fixes are intended for the current `main` branch. No tagged, supported 
 
 ## Private reporting
 
-Please use [GitHub private vulnerability reporting](https://github.com/ashkanmardan/tennis-manager/security/advisories/new) if the repository owner has enabled it. If the link is unavailable, contact the maintainer privately using a contact method on their [GitHub profile](https://github.com/ashkanmardan). The owner should enable private vulnerability reporting and publish a dedicated security contact before distributing a new release.
+Please use [GitHub private vulnerability reporting](https://github.com/ashkanmardan/tennis-manager/security/advisories/new), enabled for this repository on 2026-09-20. If the link is unavailable, contact the maintainer privately using a contact method on their [GitHub profile](https://github.com/ashkanmardan). A dedicated security contact and a test from an external reporter account are still needed before distributing a new release.
 
 Include the affected version or commit, Android version and device, reproduction steps, impact, and a minimal proof of concept without real student or payment data. The maintainer should acknowledge the report, assess severity, coordinate a fix and release, and credit the reporter if requested. No response time is guaranteed yet. Please allow a reasonable opportunity for remediation before public disclosure. Do not post vulnerabilities or personal data in public issues.

@@ -30,7 +30,7 @@ Audited 2026-09-20 from `main` at `a721d01` (four commits), before the readiness
 - **Duplicated tree.** `lib/lib/` contains 61 files: 47 matched active paths byte-for-byte at audit time, while 14 differed or had no counterpart. It may confuse contributors and complicate analysis; removal needs owner review because historical code differs.
 - **Asset provenance.** Vazirmatn is SIL OFL 1.1; its license notice is now included. Icon scripts indicate local generation/copy steps, but the exact provenance of checked-in launcher images and full source ownership should be confirmed by the maintainer before a release. The MIT license covers original project code/docs and does not override third-party licenses.
 - **Product description drift.** The source entry point and SQLite schema focus on one player, packages, sessions, and payments. Historic drafts describe broader student/coach management; documentation now distinguishes implemented behavior from proposals.
-- **Security contact gap.** No dedicated private email was provided. GitHub private vulnerability reporting must be enabled and tested by the owner; the conduct policy also needs a dedicated private channel.
+- **Security contact gap.** No dedicated private email was provided. GitHub private vulnerability reporting was enabled on 2026-09-20, but has not been tested from an external reporter account. The conduct policy still needs a dedicated private channel.
 - **No test coverage for migrations, restore, payments, or session state.** The added number-formatting test only covers a small pure helper.
 
 ### Low
