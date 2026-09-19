@@ -1,67 +1,73 @@
 # Tennis Manager
 
-Persian-first Android app for managing tennis classes, students, sessions, and payments.
+A Persian-first Flutter app for tracking a tennis player's training sessions, packages, payments, and coaching details on Android.
 
-## معرفی
+[![Flutter CI](https://github.com/ashkanmardan/tennis-manager/actions/workflows/flutter-ci.yml/badge.svg)](https://github.com/ashkanmardan/tennis-manager/actions/workflows/flutter-ci.yml) [![License: MIT](https://img.shields.io/github/license/ashkanmardan/tennis-manager)](LICENSE) [![Issues](https://img.shields.io/github/issues/ashkanmardan/tennis-manager)](https://github.com/ashkanmardan/tennis-manager/issues)
 
-Tennis Manager یک اپ آفلاین برای مدیریت کلاس‌های تنیس است. تمرکز آن روی ثبت شاگردها، مدیریت جلسات، حضور و غیاب، پرداخت‌ها، گزارش‌ها و پشتیبان‌گیری است.
+The CI badge reflects GitHub's actual workflow state after this branch is merged; local checks are recorded in the [readiness report](OPEN_SOURCE_READINESS_REPORT.md).
 
-## توضیح کوتاه
+## Overview
 
-یک برنامه اندرویدی برای مدیریت کلاس تنیس، شاگردها، جلسه‌ها و پرداخت‌ها با رابط فارسی و آفلاین.
+Tennis Manager helps Persian-speaking players record training packages, scheduled sessions, payments, reports, and coach information. The UI is right-to-left and uses Jalali dates. The current code is primarily a **single-player training tracker**; older design documents describe broader student/coach management ideas that are not all implemented.
 
 ## Features
 
-- Persian RTL interface
-- Jalali calendar support
-- Offline-first workflow
-- Student management
-- Session scheduling and tracking
-- Attendance records
-- Payment and finance tracking
-- Monthly reports
-- Backup and restore
+- Persian RTL interface and Jalali calendar helpers
+- Local SQLite storage for profile, packages, sessions, and payments
+- Reports and JSON backup export/restore screen
+- Shareable backups through Android's share sheet
 
-## Project Structure
+## Download and screenshots
 
-```text
-lib/
-  core/           shared constants, theme, and helpers
-  data/           models, repositories, and database
-  presentation/   screens and reusable widgets
-```
+No GitHub Release has been published at the time of this documentation update. Future verified APKs should be attached to [GitHub Releases](https://github.com/ashkanmardan/tennis-manager/releases). An older APK remains at [`releases/TennisApp-release.apk`](releases/TennisApp-release.apk); its APK signature validates, but its signer identity and exact source revision have not been independently matched. See [release process](docs/RELEASING.md).
 
-## Requirements
+There are no real screenshots in the repository yet. See the [capture checklist](docs/screenshots/README.md).
 
-1. Flutter SDK 3.x or newer
-2. Android Studio or VS Code
+## Requirements and installation
 
-## Run
+- Flutter **3.47.1** with Dart **3.13.1** is the locally inspected toolchain and CI target. `pubspec.yaml` allows Dart `>=3.0.0 <4.0.0`; older Flutter versions have not been validated.
+- Android SDK with API 36 and JDK 21 for builds. The Gradle files request `compileSdk 36`; Flutter 3.47.1's defaults set minimum API 24 (Android 7.0) and target API 36. Device-level support still needs validation on real devices.
+- An Android device or emulator for running the UI.
 
 ```bash
+git clone https://github.com/ashkanmardan/tennis-manager.git
+cd tennis-manager
 flutter pub get
 flutter run
 ```
 
-## APK
+For a complete environment checklist, see [installation](docs/INSTALLATION.md).
 
-The current APK is included in this repository:
+## Development and testing
 
-`releases/TennisApp-release.apk`
+```bash
+flutter analyze
+flutter test
+dart format --output=none --set-exit-if-changed test
+flutter build apk --debug
+```
 
-## Business Rules
+The repository contains a Gradle wrapper for Android builds. Release signing is not configured in public source; follow [releasing](docs/RELEASING.md) before distributing a release APK. CI validates on pushes to `main` and pull requests. See [testing](docs/TESTING.md) for known gaps.
 
-- Makeup sessions are free and reduce coach debt
-- Group-fee absence does not remove the fee
-- Payments can be split into multiple entries
-- Ball costs are tracked separately
-- Coach history is preserved
+## Project structure and architecture
 
-## Notes
+`lib/core/` contains themes and date/formatting helpers, `lib/data/` contains SQLite models and repositories, and `lib/presentation/` contains the UI. `android/` contains the Android host project. `test/` contains focused logic tests. The nested `lib/lib/` tree is an older duplicate and remains under audit; it is not the entry point. See [architecture](docs/ARCHITECTURE.md) and the [open source audit](docs/OPEN_SOURCE_AUDIT.md).
 
-- The repository currently includes design and architecture notes used during development.
-- The APK is large enough that future releases may be better handled through GitHub Releases rather than normal repository history.
+## Data, privacy, and localization
 
-## Owner
+The app stores data in a local SQLite database. Export writes a JSON backup to app-specific external storage, then opens Android sharing; selecting another app can send that backup off-device. Profile links can open Instagram in an external app or browser. Review [privacy details](docs/PRIVACY.md) before using real personal data.
 
-Ashkan Mardanpour
+The application currently forces Persian (`fa_IR`) and RTL layout. Jalali conversions are provided by `shamsi_date` and local helpers. English UI localization is not yet implemented.
+
+## Community
+
+- [Contributing](CONTRIBUTING.md), [Code of Conduct](CODE_OF_CONDUCT.md), and [roadmap](ROADMAP.md)
+- [Report a bug or request a feature](https://github.com/ashkanmardan/tennis-manager/issues/new/choose)
+- [Report a security issue privately](SECURITY.md)
+- [Changelog](CHANGELOG.md)
+
+## License and maintainer
+
+Original project code and documentation are licensed under the [MIT License](LICENSE), copyright (c) 2026 Ashkan Mardanpour. Bundled Vazirmatn fonts are under the SIL Open Font License 1.1; see [third-party notices](NOTICE.md). The provenance of launcher icons still needs the maintainer's confirmation.
+
+Maintained by [Ashkan Mardanpour](https://github.com/ashkanmardan).
