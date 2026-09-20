@@ -19,7 +19,7 @@ Tennis Manager helps Persian-speaking players record training packages, schedule
 
 ## Download and screenshots
 
-No GitHub Release has been published at the time of this documentation update. Future verified APKs should be attached to [GitHub Releases](https://github.com/ashkanmardan/tennis-manager/releases). An older APK remains at [`releases/TennisApp-release.apk`](releases/TennisApp-release.apk); its APK signature validates, but its signer identity and exact source revision have not been independently matched. See [release process](docs/RELEASING.md).
+Download the verified Android release from [GitHub Releases](https://github.com/ashkanmardan/tennis-manager/releases/latest). The older APK in [`releases/TennisApp-release.apk`](releases/TennisApp-release.apk) is retained only as historical material and is not the current distribution binary. See [release process](docs/RELEASING.md) and the [release notes](docs/releases/v1.0.1.md).
 
 There are no real screenshots in the repository yet. See the [capture checklist](docs/screenshots/README.md).
 
@@ -47,7 +47,7 @@ dart format --output=none --set-exit-if-changed test
 flutter build apk --debug
 ```
 
-The repository contains a Gradle wrapper for Android builds. Release signing is not configured in public source; follow [releasing](docs/RELEASING.md) before distributing a release APK. CI validates on pushes to `main` and pull requests. See [testing](docs/TESTING.md) for known gaps.
+The repository contains a Gradle wrapper for Android builds. Release signing is intentionally configured outside public source; follow [releasing](docs/RELEASING.md) before distributing a release APK. CI validates on pushes to `main` and pull requests. See [testing](docs/TESTING.md) for known gaps.
 
 ## Project structure and architecture
 
