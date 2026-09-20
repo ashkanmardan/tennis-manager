@@ -86,61 +86,68 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   // ── finish + auto-schedule ─────────────────────────────────────────────────
   Future<void> _finish() async {
+    if (_saving) return;
     setState(() => _saving = true);
     final repo = context.read<AppRepository>();
 
-    final days = (_daysMode == 'odd' || _daysMode == 'even')
-        ? _daysMode
-        : jsonEncode(_selectedDays.toList());
-    final timeStr =
-        '${_trainingTime.hour.toString().padLeft(2, '0')}:${_trainingTime.minute.toString().padLeft(2, '0')}';
+    try {
+      final days = (_daysMode == 'odd' || _daysMode == 'even')
+          ? _daysMode
+          : jsonEncode(_selectedDays.toList());
+      final timeStr =
+          '${_trainingTime.hour.toString().padLeft(2, '0')}:${_trainingTime.minute.toString().padLeft(2, '0')}';
 
-    // ذخیره بازیکن
-    await repo.savePlayer(Player(
-      name: _nameCtrl.text.trim(),
-      phone: _phoneCtrl.text.trim().isEmpty ? null : _phoneCtrl.text.trim(),
-      coachName: _coachCtrl.text.trim(),
-      coachPhone: _coachPhoneCtrl.text.trim().isEmpty ? null : _coachPhoneCtrl.text.trim(),
-      coachCardNumber: _coachCardCtrl.text.trim().isEmpty ? null : _coachCardCtrl.text.trim(),
-      clubName: _clubCtrl.text.trim().isEmpty ? null : _clubCtrl.text.trim(),
-      trainingDays: days,
-      trainingTime: timeStr,
-      sessionDuration: _sessionDuration,
-      classParticipants: _classParticipants,
-      onboardingComplete: true,
-    ));
+      // ذخیره بازیکن
+      final player = Player(
+        name: _nameCtrl.text.trim(),
+        phone: _phoneCtrl.text.trim().isEmpty ? null : _phoneCtrl.text.trim(),
+        coachName: _coachCtrl.text.trim(),
+        coachPhone: _coachPhoneCtrl.text.trim().isEmpty ? null : _coachPhoneCtrl.text.trim(),
+        coachCardNumber: _coachCardCtrl.text.trim().isEmpty ? null : _coachCardCtrl.text.trim(),
+        clubName: _clubCtrl.text.trim().isEmpty ? null : _clubCtrl.text.trim(),
+        trainingDays: days,
+        trainingTime: timeStr,
+        sessionDuration: _sessionDuration,
+        classParticipants: _classParticipants,
+      );
 
-    // قیمت واقعی (سهم من)
-    final totalPrice = int.tryParse(_pkgPriceCtrl.text.replaceAll(',', '')) ?? 0;
-    final myShare = _classParticipants > 1
-        ? (totalPrice / _classParticipants).round()
-        : totalPrice;
+      // قیمت واقعی (سهم من)
+      final totalPrice = int.tryParse(_pkgPriceCtrl.text.replaceAll(',', '')) ?? 0;
+      final myShare = _classParticipants > 1
+          ? (totalPrice / _classParticipants).round()
+          : totalPrice;
 
-    final today = JalaliHelper.today;
-    final startDate = _pkgStartDate ??
-        JalaliHelper.toJalaliIso(today.year, today.month, today.day);
+      final today = JalaliHelper.today;
+      final startDate = _pkgStartDate ??
+          JalaliHelper.toJalaliIso(today.year, today.month, today.day);
 
-    final pkg = TrainingPackage(
-      name: _pkgNameCtrl.text.trim(),
-      totalSessions: int.tryParse(_pkgCountCtrl.text) ?? 12,
-      price: myShare,
-      startDate: startDate,
-      createdAt: DateTime.now().toIso8601String(),
-    );
-    await repo.addPackage(pkg);
-    await repo.loadAll();
-
-    // چینش خودکار جلسات
-    await _autoSchedule(repo, startDate, timeStr, pkg.totalSessions);
-    await repo.loadAll();
-
-    if (mounted) {
-      Navigator.of(context).pushReplacementNamed('/home');
+      final pkg = TrainingPackage(
+        name: _pkgNameCtrl.text.trim(),
+        totalSessions: int.tryParse(_pkgCountCtrl.text) ?? 12,
+        price: myShare,
+        startDate: startDate,
+        createdAt: DateTime.now().toIso8601String(),
+      );
+      final sessions = _buildSchedule(startDate, timeStr, pkg.totalSessions);
+      await repo.completeOnboarding(
+        player: player, package: pkg, sessions: sessions,
+      );
+      // AppRoot shows the main screen when the saved profile is complete.
+    } catch (error, stackTrace) {
+      debugPrint('Unable to complete onboarding (${error.runtimeType}).');
+      debugPrintStack(stackTrace: stackTrace);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('ذخیره اطلاعات انجام نشد. لطفاً دوباره تلاش کنید.'),
+        ));
+      }
+    } finally {
+      if (mounted) setState(() => _saving = false);
     }
   }
 
-  Future<void> _autoSchedule(AppRepository repo, String startJalaliIso,
-      String timeStr, int totalCount) async {
+  List<Session> _buildSchedule(String startJalaliIso,
+      String timeStr, int totalCount) {
     // نگاشت کد روز → weekday داخلی Dart (1=Mon .. 6=Sat, 7=Sun)
     const dayToWeekday = {
       'sat': 6, 'sun': 7, 'mon': 1, 'tue': 2,
@@ -148,7 +155,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     };
 
     final startGreg = JalaliHelper.parseJalaliDate(startJalaliIso).toDateTime();
-    final pkgId = repo.activePackage?.id;
+    final sessions = <Session>[];
     final nowIso = DateTime.now().toIso8601String();
     final limit = startGreg.add(const Duration(days: 400));
 
@@ -166,20 +173,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
       if (matches) {
         final j = JalaliHelper.toJalali(cur);
-        await repo.sessionRepo.insert(Session(
+        sessions.add(Session(
           scheduledDate: cur.toIso8601String().substring(0, 10),
           jalaliYear:  j.year,
           jalaliMonth: j.month,
           time: timeStr,
           duration: _sessionDuration,
           status: SessionStatus.upcoming,
-          packageId: pkgId,
           createdAt: nowIso,
         ));
         count++;
       }
       cur = cur.add(const Duration(days: 1));
     }
+    return sessions;
   }
 
   // ── build ──────────────────────────────────────────────────────────────────
@@ -252,7 +259,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     child: Row(children: [
       if (_page > 0) ...[
         OutlinedButton(
-          onPressed: _back,
+          onPressed: _saving ? null : _back,
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
             side: const BorderSide(color: AppColors.primary),

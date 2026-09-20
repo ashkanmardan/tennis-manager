@@ -4,7 +4,13 @@ All notable changes from this point forward will be documented here, following [
 
 ## [Unreleased]
 
+### Fixed
+
+- Finish initial setup through the app's existing state routing instead of navigating to an undefined `/home` route.
+- Save the player, initial package, and generated sessions together in one transaction. Failed setup keeps the entered information and allows retrying without duplicate records.
+
 ### Added
 
 - Open source documentation, contribution and security policies, issue forms, and CI validation.
 - A focused test for payment amount formatting and parsing.
+- Widget tests with SQLite for successful setup and recovery from a failed session write.

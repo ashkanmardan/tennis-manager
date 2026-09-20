@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+import '../database/database_helper.dart';
 import '../models/player.dart';
 import '../models/session.dart';
 import '../models/training_package.dart';
@@ -49,6 +51,25 @@ class AppRepository extends ChangeNotifier {
   }
 
   // ── convenience ────────────────────────────────────────────────────────────
+  Future<void> completeOnboarding({
+    required Player player,
+    required TrainingPackage package,
+    required List<Session> sessions,
+  }) async {
+    final db = await DatabaseHelper.instance.database;
+    // Publish completion only after the profile, package and sessions all exist.
+    await db.transaction((txn) async {
+      await txn.update('packages', {'is_active': 0}, where: 'is_active = 1');
+      final packageId = await txn.insert('packages', package.toMap());
+      for (final session in sessions) {
+        await txn.insert('sessions', session.copyWith(packageId: packageId).toMap());
+      }
+      await txn.insert('player', player.copyWith(onboardingComplete: true).toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    });
+    await loadAll();
+  }
+
   Future<void> savePlayer(Player p) async {
     await _playerRepo.save(p);
     player = p;
