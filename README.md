@@ -68,6 +68,6 @@ The application currently forces Persian (`fa_IR`) and RTL layout. Jalali conver
 
 ## License and maintainer
 
-Original project code and documentation are licensed under the [MIT License](LICENSE), copyright (c) 2026 Ashkan Mardanpour. Bundled Vazirmatn fonts are under the SIL Open Font License 1.1; see [third-party notices](NOTICE.md). The provenance of launcher icons still needs the maintainer's confirmation.
+Original project code, documentation, and launcher icon artwork are licensed under the [MIT License](LICENSE), copyright (c) 2026 Ashkan Mardanpour. The maintainer confirmed that they designed the launcher icons. Bundled Vazirmatn fonts are under the SIL Open Font License 1.1; see [third-party notices](NOTICE.md).
 
 Maintained by [Ashkan Mardanpour](https://github.com/ashkanmardan).

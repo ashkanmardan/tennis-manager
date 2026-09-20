@@ -5,7 +5,7 @@
 **URL:** <https://github.com/ashkanmardan/tennis-manager>
 
 **Maintainer:** Ashkan Mardanpour
-**License:** MIT for original project code/docs; bundled Vazirmatn font is SIL OFL 1.1. Launcher icon provenance still needs owner confirmation.
+**License:** MIT for original project code, documentation, and maintainer-designed launcher icons; bundled Vazirmatn font is SIL OFL 1.1.
 
 **Description:** A Persian-first Flutter Android app for tracking a tennis player's training packages, sessions, payments, and coach information. The interface uses RTL layout and Jalali dates. Data is stored in local SQLite, and the app can export a shareable JSON backup. Public source lets users inspect how their personal training data is handled and lets contributors improve the Persian/RTL workflow.
 

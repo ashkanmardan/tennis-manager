@@ -13,7 +13,7 @@ Prepared on branch `chore/open-source-readiness` from `a721d01` on 2026-09-20. T
 
 ## Legal / License Status
 
-MIT is in the root `LICENSE` for original code/docs. Vazirmatn is SIL OFL 1.1 (`assets/fonts/OFL.txt`); Contributor Covenant 3.0 text is CC BY-SA 4.0. Direct pub package license files showed permissive MIT/BSD-style terms. The owner should confirm launcher icon and source provenance; transitive/native components and the old APK were not fully audited.
+MIT is in the root `LICENSE` for original project code, documentation, and launcher icon artwork. The maintainer confirmed on 2026-09-20 that they developed the app and designed the icons; the ten checked-in launcher PNGs matched the clean local source checkout. Vazirmatn is SIL OFL 1.1 (`assets/fonts/OFL.txt`); Contributor Covenant 3.0 text is CC BY-SA 4.0. Direct pub package license files showed permissive MIT/BSD-style terms. Transitive/native components and the old APK were not fully audited.
 
 ## Security Status
 
@@ -45,7 +45,7 @@ README, license, conduct, contributing, security policy, issue forms, and PR tem
 
 ## Remaining Manual Tasks
 
-1. Confirm ownership/provenance of source and launcher icons, then review the old APK's signer against the intended release key.
+1. Review the old APK's signer against the intended release key; do not present that historical binary as a verified release.
 2. Test GitHub private vulnerability reporting from an external reporter account and choose a private conduct-reporting contact.
 3. Install the app on Android, test upgrade and backup/restore with synthetic data, and capture redacted real screenshots. Recheck CI after subsequent commits and before merge.
 4. Configure a private release key outside Git, verify a signed release APK, then create a tag and GitHub Release.
@@ -65,4 +65,4 @@ The historical APK is large and has unresolved provenance; backups contain sensi
 
 ## Recommended Next Development Steps
 
-Review the draft PR, validate installation/backup on a device, resolve signing and asset provenance, then create the first verified GitHub Release. Add focused migration and backup tests before expanding features.
+Review the draft PR, validate installation/backup on a device, resolve release signing, then create the first verified GitHub Release. Add focused migration and backup tests before expanding features.
