@@ -1,6 +1,6 @@
 # Releasing
 
-Release `v1.0.1` was prepared manually from commit `ff160e7`. No automatic public release signing is configured because the production keystore must remain private and GitHub Actions signing secrets have not been provisioned.
+Release `v1.0.1` is prepared manually. The final tag commit and GitHub Release URL are recorded after publication. No automatic public release signing is configured because the production keystore must remain private and GitHub Actions signing secrets have not been provisioned.
 
 1. Review the diff, asset provenance, privacy behavior, and open audit findings.
 2. Update `pubspec.yaml` version and `CHANGELOG.md` with verified changes.
