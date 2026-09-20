@@ -2,7 +2,7 @@
 
 ## Version
 
-`1.0.1+2`, prepared for tag `v1.0.1`. The final tag commit and GitHub Release URL are recorded after publication.
+`1.0.1+2`, published as tag `v1.0.1` from merge commit `36e146d4eafbfe85355288ba7b3290faaca1af93`.
 
 ## Build and tests
 
@@ -31,7 +31,7 @@ No real screenshots were available in this release preparation. None were fabric
 
 ## GitHub Release and tag
 
-The GitHub Release is pending final tag publication with `TennisManager-v1.0.1.apk` and `SHA256SUMS.txt` planned as assets.
+The GitHub Release is published at https://github.com/ashkanmardan/tennis-manager/releases/tag/v1.0.1. The APK and checksum were verified locally; GitHub currently exposes the release notes and source archives, while binary asset upload remains pending.
 
 ## Security review
 
