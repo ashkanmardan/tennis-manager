@@ -1,6 +1,6 @@
 # Releasing
 
-No automatic public release is configured. The source currently declares `version: 1.0.0+1`, but that alone does not prove an APK was built from this revision or signed for distribution.
+No automatic public release is configured. The application version is declared in `pubspec.yaml`, but that alone does not prove an APK was built from this revision or signed for distribution.
 
 1. Review the diff, asset provenance, privacy behavior, and open audit findings.
 2. Update `pubspec.yaml` version and `CHANGELOG.md` with verified changes.
