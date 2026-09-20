@@ -14,7 +14,7 @@ Audited 2026-09-20 against `main` commit `11c7039` and the published `v1.0.1` re
 
 - Local analysis and tests previously passed on the release source; the release PR CI passed.
 - A real Android phone test was reported by the maintainer for installation and onboarding, but device model, Android version, and a full feature matrix were not recorded.
-- One real dashboard screenshot is now committed under `docs/screenshots/01-dashboard.jpg`. No additional screenshots are claimed.
+- Five real screenshots are now committed under `docs/screenshots/` for dashboard, finance, session form, sessions, and reports. Two profile screenshots were excluded because they expose phone and card numbers.
 - Backup/restore, upgrade, permissions, external-link, picker, payment, report, and restart behavior remain untested in this audit.
 
 ## Source tree and technical debt

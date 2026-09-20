@@ -27,7 +27,7 @@ The maintainer tested the release APK on a real Android phone and confirmed the 
 
 ## Screenshots
 
-One real dashboard screenshot from the v1.0.1 Android app is committed at `docs/screenshots/01-dashboard.jpg`; no additional screenshots were fabricated.
+Five real v1.0.1 screenshots are committed under `docs/screenshots/`; profile images with phone/card numbers were excluded and no screenshots were fabricated.
 
 ## GitHub Release and tag
 

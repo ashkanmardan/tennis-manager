@@ -21,13 +21,17 @@ Tennis Manager helps Persian-speaking players record training packages, schedule
 
 Download the verified Android release from [GitHub Releases](https://github.com/ashkanmardan/tennis-manager/releases/latest). The older APK in [`releases/TennisApp-release.apk`](releases/TennisApp-release.apk) is retained only as historical material and is not the current distribution binary. See [release process](docs/RELEASING.md) and the [release notes](docs/releases/v1.0.1.md).
 
-The v1.0.1 dashboard has been captured from the real Android app with synthetic-looking sample data:
+The following screenshots were captured from the real v1.0.1 Android app with sample data:
 
-| Home dashboard |
-| --- |
-| ![Tennis Manager home dashboard](docs/screenshots/01-dashboard.jpg) |
+| Home | Finance | Session form |
+| --- | --- | --- |
+| ![Tennis Manager home dashboard](docs/screenshots/01-dashboard.jpg) | ![Tennis Manager finance](docs/screenshots/02-finance.jpg) | ![Tennis Manager session form](docs/screenshots/03-session-form.jpg) |
 
-This is the only device screenshot currently committed. See the [screenshot notes](docs/screenshots/README.md).
+| Sessions | Reports |
+| --- | --- |
+| ![Tennis Manager sessions](docs/screenshots/04-sessions.jpg) | ![Tennis Manager reports](docs/screenshots/05-reports.jpg) |
+
+Profile screenshots with visible phone and card numbers are intentionally excluded. See the [screenshot notes](docs/screenshots/README.md).
 
 ## Requirements and installation
 

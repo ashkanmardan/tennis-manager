@@ -26,7 +26,7 @@ Not tested in a structured device matrix. The privacy documentation accurately d
 
 ## Screenshot Status
 
-One supplied real dashboard screenshot is committed at [01-dashboard.jpg](docs/screenshots/01-dashboard.jpg). No additional screenshots were fabricated.
+Five supplied real screenshots are committed under [docs/screenshots](docs/screenshots): dashboard, finance, session form, sessions, and reports. Two profile screenshots were excluded because they expose phone and card numbers. No screenshots were fabricated.
 
 ## `lib/lib` Audit
 
