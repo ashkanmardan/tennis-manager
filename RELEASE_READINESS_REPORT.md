@@ -27,7 +27,7 @@ The maintainer tested the release APK on a real Android phone and confirmed the 
 
 ## Screenshots
 
-No real screenshots were available in this release preparation. None were fabricated.
+One real dashboard screenshot from the v1.0.1 Android app is committed at `docs/screenshots/01-dashboard.jpg`; no additional screenshots were fabricated.
 
 ## GitHub Release and tag
 

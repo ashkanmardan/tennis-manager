@@ -14,7 +14,7 @@ Audited 2026-09-20 against `main` commit `ff160e7decb7eb3bcddb4ba12eac4188b3d444
 | Git tags/releases before this release | No tags and no GitHub Releases |
 | CI | Flutter CI passed on merged commit `ff160e7` |
 | Device test | Maintainer confirmed the onboarding flow and release APK work on a real Android phone; the full backup/upgrade matrix is not claimed |
-| Screenshots | Pending; no screenshots are fabricated |
+| Screenshots | One supplied real dashboard screenshot committed under `docs/screenshots/01-dashboard.jpg`; no additional screenshots are claimed |
 | Legacy APK | `releases/TennisApp-release.apk` is historical and excluded from current download instructions |
 | Nested `lib/lib` | 61-file duplicate tree; no active import from the main entry point found, retained pending a separate cleanup review |
 

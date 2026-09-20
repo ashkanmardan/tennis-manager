@@ -21,12 +21,18 @@ Tennis Manager helps Persian-speaking players record training packages, schedule
 
 Download the verified Android release from [GitHub Releases](https://github.com/ashkanmardan/tennis-manager/releases/latest). The older APK in [`releases/TennisApp-release.apk`](releases/TennisApp-release.apk) is retained only as historical material and is not the current distribution binary. See [release process](docs/RELEASING.md) and the [release notes](docs/releases/v1.0.1.md).
 
-There are no real screenshots in the repository yet. See the [capture checklist](docs/screenshots/README.md).
+The v1.0.1 dashboard has been captured from the real Android app with synthetic-looking sample data:
+
+| Home dashboard |
+| --- |
+| ![Tennis Manager home dashboard](docs/screenshots/01-dashboard.jpg) |
+
+This is the only device screenshot currently committed. See the [screenshot notes](docs/screenshots/README.md).
 
 ## Requirements and installation
 
 - Flutter **3.47.1** with Dart **3.13.1** is the locally inspected toolchain and CI target. `pubspec.yaml` allows Dart `>=3.0.0 <4.0.0`; older Flutter versions have not been validated.
-- Android SDK with API 36 and JDK 21 for builds. The Gradle files request `compileSdk 36`; Flutter 3.47.1's defaults set minimum API 24 (Android 7.0) and target API 36. Device-level support still needs validation on real devices.
+- Android SDK with API 36 and JDK 21 for builds. The Gradle files request `compileSdk 36`; Flutter 3.47.1's defaults set minimum API 24 (Android 7.0) and target API 36. v1.0.1 has been tested on one real Android device for installation and core onboarding; broader device compatibility and the full backup/upgrade matrix remain under validation.
 - An Android device or emulator for running the UI.
 
 ```bash
