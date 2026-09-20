@@ -1,0 +1,7 @@
+# Data and privacy
+
+The code stores profile, package, session, and payment records in the app's SQLite database (`tennis_player.db`, via `sqflite`). It can include names, phone numbers, coach information, card numbers, payment notes, and receipt image paths. Data is not encrypted by this application code.
+
+The backup screen writes JSON to an app-specific external storage `backups` directory and invokes the Android share sheet. Its JSON includes profile, package, sessions, and payments; it does not appear to bundle receipt images. A user-selected share destination may transfer that data to another app or cloud service. Treat backup files as sensitive; avoid posting them in issues. Restore reads these local JSON backups and changes stored records.
+
+No analytics or app-owned server request was found in the inspected source. `url_launcher` opens Instagram profile links in external apps or browsers. `share_plus` and `image_picker` may involve other apps or system pickers at the user's direction. AndroidManifest declares legacy external storage read/write permissions (with Android version limits) and `READ_MEDIA_IMAGES`. The locally built **debug** APK also requests `INTERNET` and a generated receiver permission in its merged manifest; debug and release manifests may differ. Inspect each release APK for a definitive permission list. The absence of an app-owned server call does not mean backups can never leave the device.
