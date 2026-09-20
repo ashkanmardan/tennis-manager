@@ -31,7 +31,7 @@ No real screenshots were available in this release preparation. None were fabric
 
 ## GitHub Release and tag
 
-The GitHub Release is published at https://github.com/ashkanmardan/tennis-manager/releases/tag/v1.0.1. The APK and checksum were verified locally; GitHub currently exposes the release notes and source archives, while binary asset upload remains pending.
+The GitHub Release is published at https://github.com/ashkanmardan/tennis-manager/releases/tag/v1.0.1 with `TennisManager-v1.0.1.apk` and `SHA256SUMS.txt` attached.
 
 ## Security review
 
