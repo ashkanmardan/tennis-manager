@@ -4,6 +4,10 @@ All notable changes from this point forward will be documented here, following [
 
 ## [Unreleased]
 
+Future changes will be recorded here.
+
+## [1.0.1] - 2026-09-20
+
 ### Fixed
 
 - Finish initial setup through the app's existing state routing instead of navigating to an undefined `/home` route.
